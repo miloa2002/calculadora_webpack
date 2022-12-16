@@ -1,0 +1,92 @@
+//variables
+$fuente: 'League Spartan', sans-serif;
+
+//tema 1
+$fondo-calculadora: #252D46;
+$screen-calculadora: #181F32;
+$screen-text: #FCFEFF;
+$btn-color: #EAE3DB;
+$border-button: #B1A49E;
+$color-btn: #424657;
+
+$body-fondo: #3B4664;
+
+html{
+    box-sizing: border-box;
+    font-size: 62.5%;
+}
+*,*::before, *::after{
+    box-sizing: inherit;
+}
+body{
+    font-family: $fuente;
+    font-size: 1.6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: $body-fondo;
+}
+button{
+    border: 0;
+    outline: 0;
+}
+/*calculadora*/
+.calculadora{
+    width: 40rem;
+    .title{
+        color: $btn-color;
+    }
+    .screen{
+        padding: 2rem;
+        margin-bottom: 1rem;
+        background-color: $screen-calculadora;
+        width: 100%;
+        border-radius: 5px;
+        color: $screen-text;
+        text-align: right;
+        border: 0;
+    }
+    .inputs input[type=radio]:checked{
+        background: #CB8306;
+  color: #FAFAFA;
+    }
+}
+
+.container-btns{
+    background-color: $fondo-calculadora;
+    padding: 2rem;
+    border-radius: 5px;
+    .calculadora__btns{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+
+        input[type=button]{
+            background-color: $btn-color;
+            padding: 5px 15px;
+            border-radius: 5px;
+            border: 0;
+            border-bottom: 2px solid $border-button;
+            color: $color-btn;
+        }
+
+        input.del{
+            background-color: $body-fondo;
+            color: $btn-color;
+        }
+
+        input.reset{
+            grid-column: 1/3;
+            background-color: $body-fondo;
+            color: $btn-color;
+        }
+        input.igual{
+            grid-column: 3/5;
+            background-color: #D13F30;
+            color: $btn-color;
+            border-bottom: 2px solid #9C2416;
+        }
+    }
+}
+
