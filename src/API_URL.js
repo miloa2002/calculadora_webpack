@@ -1,2 +1,2 @@
-export const API_URL = "http://localhost:3000/numers"; 
+export const API_URL = "https://prueba-vercel-bn96.vercel.app/numers"; 
 
