@@ -119,6 +119,7 @@ export function mostrarHTML(respuesta) {
     let limpiar = document.querySelector(".reset")
     let igualDato = document.querySelector(".igual")
     let resultado = document.querySelector(".screen")
+    let borrarNum = document.querySelector(".del")
 
     let opActual = "";
     let opAnter = "";
@@ -129,6 +130,7 @@ export function mostrarHTML(respuesta) {
             numeroAgregar(e.target.value);
         })
     });
+    
 
     operaciones.forEach(function(bton){
         bton.addEventListener("click", function(e){
@@ -157,6 +159,7 @@ export function mostrarHTML(respuesta) {
         opActual = "";
     }
 
+    //función de calcular según la operación
     function calcular(){
         let calcula;
         let anterior = parseFloat(opAnter);
@@ -185,17 +188,31 @@ export function mostrarHTML(respuesta) {
     }
 
 
+    //agregar de a un número
     function numeroAgregar(numer){
         opActual = opActual.toString() + numer.toString();
         actualizar();
     }
 
+    //borrar de a un número
+    borrarNum.addEventListener("click", function(){
+        borrarN();
+    })
+
+    function borrarN(){
+        let valorN = resultado.value;
+        let valorNew = valorN.substring(0,valorN.length - 1);
+        resultado.value = valorNew
+    }
+
+    //resetear
     function clear(){
         opActual = "";
         opAnter = "";
         operacion = 0;
     }
 
+    //valores actualizados
     function actualizar(){
         resultado.value = opActual;
     }
