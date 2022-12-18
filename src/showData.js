@@ -4,25 +4,25 @@ export function mostrarHTML(respuesta) {
     respuesta.data.forEach(element => {
         const { n0, n1, n2, n3, n4, n5, n6, n7, n8, n9 } = element
         btnsNumber += `
-        <input type="button" value="${n7}">
-        <input type="button" value="${n8}">
-        <input type="button" value="${n9}">
+        <input class="dato-number" type="button" value="${n7}">
+        <input class="dato-number" type="button" value="${n8}">
+        <input class="dato-number" type="button" value="${n9}">
         <input class="del" type="button" value="DEL">
 
-        <input type="button" value="${n4}">
-        <input type="button" value="${n5}">
-        <input type="button" value="${n6}">
-        <input type="button" value="+">
+        <input class="dato-number" type="button" value="${n4}">
+        <input class="dato-number" type="button" value="${n5}">
+        <input class="dato-number" type="button" value="${n6}">
+        <input class="dato-operador" type="button" value="+">
 
-        <input type="button" value="${n1}">
-        <input type="button" value="${n2}">
-        <input type="button" value="${n3}">
-        <input type="button" value="-">
+        <input class="dato-number" type="button" value="${n1}">
+        <input class="dato-number" type="button" value="${n2}">
+        <input class="dato-number" type="button" value="${n3}">
+        <input class="dato-operador" type="button" value="-">
 
         <input type="button" value=".">
-        <input type="button" value="${n0}">
-        <input type="button" value="/">
-        <input type="button" value="x">
+        <input class="dato-number" type="button" value="${n0}">
+        <input class="dato-operador" type="button" value="/">
+        <input class="dato-operador" type="button" value="x">
 
         <input class="reset" type="button" value="RESET">
         <input class="igual" type="button" value="=">
@@ -112,66 +112,93 @@ export function mostrarHTML(respuesta) {
         igual.style.borderBottom = "2px solid hsl(177, 92%, 70%)"
         igual.style.color = "hsl(268, 71%, 12%)"
     })
-}
 
+    /**********calculadora******************/
+    let btnNumeros = document.querySelectorAll(".dato-number")
+    let operaciones = document.querySelectorAll(".dato-operador")
+    let limpiar = document.querySelector(".reset")
+    let igualDato = document.querySelector(".igual")
+    let resultado = document.querySelector(".screen")
 
+    let opActual = "";
+    let opAnter = "";
+    let operacion = 0;
 
+    btnNumeros.forEach(function(bton){
+        bton.addEventListener("click", function(e){
+            numeroAgregar(e.target.value);
+        })
+    });
 
-/**********calculadora******************/
-let operando1;
-let operando2;
-let resultado;
+    operaciones.forEach(function(bton){
+        bton.addEventListener("click", function(e){
+            operacione(e.target.value)
+        })
+    });
+    
+    igualDato.addEventListener("click", function(e){
+        calcular();
+        actualizar();
+    });
 
-let screen = document.querySelector(".screen");
+    limpiar.addEventListener("click", function(e){
+        clear();
+        actualizar();
+    });
 
-btns.addEventListener("click", (e) => {
-    if (e.target.value !== undefined && e.target.value !== "+" && e.target.value !== "-" && e.target.value !== "/" && e.target.value !== "x" && e.target.value !== "=" && e.target.value !== "DEL" && e.target.value !== "RESET") {
-        screen.value = e.target.value
-    } if (e.target.value === "+") {
-        operando1 = screen.value
-        resultado = "+"
-    } if (e.target.value === "-") {
-        operando1 = screen.value
-        resultado = "-"
-    } if (e.target.value === "x") {
-        operando1 = screen.value
-        resultado = "x"
-    } if (e.target.value === "/") {
-        operando1 = screen.value
-        resultado = "/"
-    } if (e.target.value === "=") {
-        operando2 = screen.value
-        resolver();
+    function operacione(ope){
+        if(opActual === "")
+        return;
+        if(opActual !== ""){
+            calcular();
+        }
+        operacion = ope.toString();
+        opAnter = opActual;
+        opActual = "";
     }
-    if (e.target.value === "RESET") {
-        limpiar();
+
+    function calcular(){
+        let calcula;
+        let anterior = parseFloat(opAnter);
+        let actual = parseFloat(opActual);
+        if(isNaN(anterior) || isNaN(actual))
+        return;
+        switch(operacion){
+            case "+":
+                calcula = anterior + actual;
+                break;
+            case "-":
+                calcula = anterior - actual;
+                break;
+            case "x":
+                calcula = anterior * actual;
+                break;
+            case "/":
+                calcula = anterior / actual;
+                break;
+            default:
+                return;
+        }
+        opActual = calcula;
+        operacion = 0;
+        opAnter = "";
     }
-})
 
-function resolver() {
-    let respOperacion = 0;
-    switch (resultado) {
-        case "+":
-            respOperacion = parseFloat(operando1) + parseFloat(operando2);
-            break;
 
-        case "-":
-            respOperacion = parseFloat(operando1) - parseFloat(operando2);
-            break;
-
-        case "x":
-            respOperacion = parseFloat(operando1) * parseFloat(operando2);
-            break;
-
-        case "/":
-            respOperacion = parseFloat(operando1) / parseFloat(operando2);
-            break;
+    function numeroAgregar(numer){
+        opActual = opActual.toString() + numer.toString();
+        actualizar();
     }
-    screen.value = respOperacion;
-}
 
-//eliminar
-function limpiar() {
-    screen.value = 0;
+    function clear(){
+        opActual = "";
+        opAnter = "";
+        operacion = 0;
+    }
+
+    function actualizar(){
+        resultado.value = opActual;
+    }
+
 }
 
