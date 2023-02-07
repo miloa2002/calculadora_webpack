@@ -1,2 +1,1 @@
-export const API_URL = "https://prueba-vercel-bn96.vercel.app/numers"; 
-
+export const API_URL = "https://calculadora-api.vercel.app/numeros";
